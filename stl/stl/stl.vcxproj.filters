@@ -23,5 +23,8 @@
     <ClInclude Include="src\ch\PrintTuple.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\ch\Shared_ptrDefineDeleter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
