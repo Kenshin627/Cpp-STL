@@ -8,6 +8,24 @@
 #include <forward_list>
 #include <deque>
 
+template<typename T>
+void PRINT_ELEMENTS(const T& c, const std::string& sepelator)
+{
+	std::cout << sepelator << std::endl;
+
+	for (auto& i : c)
+	{
+		std::cout << i << std::endl;
+	}
+}
+
+template<size_t t>
+void addN(int& n)
+{
+	n += t;
+}
+
+
 int main()
 {
 	using std::cout, std::endl;
@@ -87,14 +105,52 @@ int main()
 	}
 
 	//istream_iterator ostream_iterator
-	std::vector<std::string> svec;
-	std::istream_iterator<std::string> it(std::cin);
-	std::istream_iterator<std::string> eos;
-	std::copy(it, eos, std::inserter(svec, svec.begin()));
+	//std::vector<std::string> svec;
+	//std::istream_iterator<std::string> it(std::cin);
+	//std::istream_iterator<std::string> eos;
+	//std::copy(it, eos, std::inserter(svec, svec.begin()));
 
-	std::sort(svec.begin(), svec.end());
+	//std::sort(svec.begin(), svec.end());
 
 
-	std::ostream_iterator<std::string> ot(std::cout);
-	std::copy(svec.cbegin(), svec.cend(), ot);
+	//std::ostream_iterator<std::string> ot(std::cout);
+	//std::copy(svec.cbegin(), svec.cend(), ot);
+
+	//user-defined functions
+	std::list<int> il;
+	for (size_t i = 0; i < 7; i++)
+	{
+		il.push_front(i);
+		il.push_back(i);
+	}
+	PRINT_ELEMENTS(il, "all elements:");
+
+	//remove
+	std::list<int> il1;
+	for (size_t i = 1; i <= 6; i++)
+	{
+		il1.push_back(i);
+		il1.push_front(i);
+	}
+
+	auto end = std::remove(il1.begin(), il1.end(), 3);
+	std::list<int>::const_iterator it;
+	for ( it = il1.cbegin(); it != end; ++it)
+	{
+		std::cout << *it << std::endl;
+	}
+
+	std::for_each(il1.cbegin(), il1.cend(), [](int i) { std::cout << i << std::endl; });
+
+	//transform
+	std::vector<int> iivec {1, 2, 3, 4, 5};
+	std::vector<int> iivec1;
+	std::transform(iivec.cbegin(), iivec.cend(), std::back_inserter(iivec1), [](int i) { return i * i; });
+	PRINT_ELEMENTS(iivec1, "transform:");
+
+	std::vector<int> iivec2{ 1,2,3,4,5 };
+	//origin function
+
+	//function object
+
 }
