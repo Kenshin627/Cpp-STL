@@ -7,6 +7,8 @@
 #include <list>
 #include <forward_list>
 #include <deque>
+#include <functional>
+#include <set>
 
 template<typename T>
 void PRINT_ELEMENTS(const T& c, const std::string& sepelator)
@@ -24,6 +26,18 @@ void addN(int& n)
 {
 	n += t;
 }
+
+struct AddN
+{
+private:
+	int x{};
+public:
+	AddN(int x) :x(x) {}
+	void operator()(int& v)
+	{
+		v += x;
+	}
+};
 
 
 int main()
@@ -150,7 +164,37 @@ int main()
 
 	std::vector<int> iivec2{ 1,2,3,4,5 };
 	//origin function
+	std::for_each(iivec2.begin(), iivec2.end(), addN<10>);
+	PRINT_ELEMENTS(iivec2, "origin function");
 
 	//function object
+	std::for_each(iivec2.begin(), iivec2.end(), AddN(10));
+	PRINT_ELEMENTS(iivec2, "function object");
 
+	//predefined function objects
+	std::deque<int> d{ 1,3,4,5,6,7,8,10 };
+	std::transform(d.begin(), d.end(),d.begin(), std::negate<int>());
+
+	PRINT_ELEMENTS(d, "predefined function objects");
+
+	//
+	std::deque<int> d1{ 1,3,5,7,9 };
+	std::transform(d1.cbegin(), d1.cend(), d1.cbegin(), d1.begin(), std::plus<int>());
+	PRINT_ELEMENTS(d1, "binary function");
+
+	//binders
+	using std::placeholders::_1;
+	std::set<int, std::greater<int>> coll1 = { 1,2,3,4,5,6,7,8,9 };
+	std::deque<int> d2;
+	PRINT_ELEMENTS(coll1, "initialized: ");
+
+	//multiplies 10
+	std::transform(coll1.cbegin(), coll1.cend(), std::back_inserter(d2), std::bind(std::multiplies<int>(), _1, 10));
+	PRINT_ELEMENTS(d2, "transformed: ");
+	//replace 10 to 42
+	std::replace_if(d2.begin(), d2.end(), std::bind(std::equal_to<int>(), _1, 10), 42);
+	PRINT_ELEMENTS(d2, "replaced: ");
+	//remove >=50 and <= 80
+	d2.erase(std::remove_if(d2.begin(), d2.end(), std::bind(std::logical_and(), std::bind(std::greater_equal<int>(), _1, 50), std::bind(std::less_equal<int>(), _1, 80))), d2.end());
+	PRINT_ELEMENTS(d2, "removed: ");
 }
