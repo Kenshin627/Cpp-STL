@@ -29,5 +29,11 @@
     <ClInclude Include="src\ch\STL.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\ch\array.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ch\vector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
