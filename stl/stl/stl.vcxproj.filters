@@ -35,5 +35,11 @@
     <ClInclude Include="src\ch\vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\ch\forward_list.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ch\set.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
