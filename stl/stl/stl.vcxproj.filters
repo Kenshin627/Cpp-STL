@@ -44,5 +44,11 @@
     <ClInclude Include="src\ch\map.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\ch\HashFunc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ch\unordered_map.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

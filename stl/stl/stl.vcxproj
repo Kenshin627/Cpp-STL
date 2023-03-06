@@ -134,11 +134,13 @@
   <ItemGroup>
     <ClInclude Include="src\ch\array.h" />
     <ClInclude Include="src\ch\forward_list.h" />
+    <ClInclude Include="src\ch\HashFunc.h" />
     <ClInclude Include="src\ch\map.h" />
     <ClInclude Include="src\ch\PrintTuple.h" />
     <ClInclude Include="src\ch\set.h" />
     <ClInclude Include="src\ch\Shared_ptrDefineDeleter.h" />
     <ClInclude Include="src\ch\STL.h" />
+    <ClInclude Include="src\ch\unordered_map.h" />
     <ClInclude Include="src\ch\vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
