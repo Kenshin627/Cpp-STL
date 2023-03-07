@@ -135,6 +135,7 @@
     <ClInclude Include="src\ch\array.h" />
     <ClInclude Include="src\ch\forward_list.h" />
     <ClInclude Include="src\ch\HashFunc.h" />
+    <ClInclude Include="src\ch\iterator.h" />
     <ClInclude Include="src\ch\map.h" />
     <ClInclude Include="src\ch\PrintTuple.h" />
     <ClInclude Include="src\ch\set.h" />
