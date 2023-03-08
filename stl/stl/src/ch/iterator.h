@@ -7,15 +7,80 @@
 #include <set>
 #include <list>
 #include <deque>
+#include <map>
+
+template<typename T>
+auto MyDistanceImp(T begin, T end, std::random_access_iterator_tag) -> std::iterator_traits<T>::difference_type
+{
+	return end - begin;
+}
+
+template<typename T>
+auto MyDistanceImp(T begin, T end, std::forward_iterator_tag) -> std::iterator_traits<T>::difference_type
+{
+	typename std::iterator_traits<T>::difference_type d = 0;
+	while (begin != end)
+	{
+		++d;
+		++begin;
+	}
+	return d;
+}
+
+template<typename T>
+auto MyDistance(T begin, T end) ->std::iterator_traits<T>::difference_type
+{
+	return MyDistanceImp(begin, end, std::iterator_traits<T>::iterator_category());
+}
+
+
 
 template<typename T>
 void PRINT_ELEMENTS(const T& container, const std::string& prefix)
-{
+{	
 	std::cout << prefix << std::endl;
 	for (auto& i : container)
 	{
 		std::cout << i << std::endl;
 	}
+}
+
+template<typename Container>
+class asso_insert_iterator
+{
+public:
+	typedef std::output_iterator_tag       iterator_category;
+	typedef typename Container::value_type value_type;
+	typedef std::ptrdiff_t                 difference_type;
+	typedef value_type&					   reference;
+	typedef value_type*					   pointer;
+public:
+	asso_insert_iterator(Container& c) :container(c) {}
+	asso_insert_iterator<Container>& operator=(const typename Container::value_type& val)
+	{
+		container.insert(val);
+		return *this;
+	}
+	asso_insert_iterator<Container>& operator*()
+	{
+		return *this;
+	}
+	asso_insert_iterator<Container>& operator++()
+	{
+		return *this;
+	}
+	asso_insert_iterator<Container>& operator++(int)
+	{
+		return *this;
+	}
+protected:
+	Container& container;
+};
+
+template<typename Container>
+inline asso_insert_iterator<Container> asso_inserter(Container& c)
+{
+	return asso_insert_iterator<Container>(c);
 }
 
 int main()
@@ -76,4 +141,25 @@ int main()
 	bi = 5;
 	bi = 6;
 	PRINT_ELEMENTS(ivec4, "assegment to back_inserter_iterator");
+
+	//iterator traits
+	std::cout << "Distance:" << std::endl;
+	std::cout << MyDistance(ss1.begin(), ss1.end()) << std::endl;
+
+	//use_defined iterator
+	std::cout << "use defined iterator: " << std::endl;
+	std::set<int> maps;
+	std::vector<int> source{ 1,2,3,4,5,6 };
+	asso_insert_iterator inserter = asso_inserter(maps);
+	std::copy(source.cbegin(), source.cend(), inserter);
+	*inserter = 3;
+	++inserter;
+	*inserter = 4;
+	++inserter;
+	*inserter = 5;
+	for (auto& i : maps)
+	{
+		std::cout << i << std::endl;
+	}
+
 }
