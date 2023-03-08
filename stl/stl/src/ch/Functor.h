@@ -6,6 +6,7 @@
 #include <vector>
 #include <functional>
 #include <set>
+#include <iterator>
 
 template<typename Container>
 void PRINT_ELEMENTS(const Container& c, const std::string& prefix)
@@ -82,6 +83,15 @@ struct PersonCompare
 	}
 };
 
+template<typename T1, typename T2>
+struct fpow1
+{
+	T1 operator()(const T1& t1, const T2& t2)
+	{
+		return std::pow(t1, t2);
+	}
+};
+
 int main()
 {
 	std::list<int> li;
@@ -118,7 +128,11 @@ int main()
 	std::set<Person, PersonCompare> people{ Person("p1"),Person("p2"), Person("p3") };
 	std::for_each(people.cbegin(), people.cend(), std::bind(&Person::printNameWithPrefix, std::placeholders::_1, "person: "));
 
-	std::for_each(people.begin(), people.end(), std::bind(&Person::setName, std::placeholders::_1, "paul"));
+	//std::for_each(people.begin(), people.end(), std::bind(&Person::setName, std::placeholders::_1, "paul"));
 
-	std::for_each(people.cbegin(), people.cend(), std::bind(&Person::printNameWithPrefix, std::placeholders::_1, "this is : "));
+	//std::for_each(people.cbegin(), people.cend(), std::bind(&Person::printNameWithPrefix, std::placeholders::_1, "this is : "));
+
+	//bind custom function object
+	std::vector<float> ivec3{ 1,2,3,4,5 };
+	std::transform(ivec3.cbegin(), ivec3.cend(), std::ostream_iterator<float>(std::cout, ","), std::bind(fpow1<float, int>(), std::placeholders::_1, 2));
 }
