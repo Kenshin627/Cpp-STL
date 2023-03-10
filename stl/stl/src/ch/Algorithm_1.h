@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <numeric>
 
 using std::cout, std::endl;
 template<typename T>
@@ -15,6 +16,15 @@ void PRINT_ELEMENTS(const T& container, const std::string& prefix)
 		cout << i << endl;
 	}
 }
+
+class BothSpace
+{
+public:
+	bool operator()(const char& c1, const char& c2)
+	{
+		return c1 == ' ' && c2 == ' ';
+	}
+};
 
 int main()
 {
@@ -54,4 +64,49 @@ int main()
 	std::vector<int> ivec6{ 1,2,3,4,5 };
 	std::transform(ivec6.cbegin(), ivec6.cend(), ivec6.cbegin(), ivec6.begin(), std::multiplies<int>());
 	PRINT_ELEMENTS(ivec6, "map to ivec6: ");
+
+	//fill_n
+	std::fill_n(std::ostream_iterator<int>(cout, " "), 10, 7);
+
+	//generate_n
+	int val = 1;
+	std::generate_n(std::ostream_iterator<int>(cout, " "), 10, [=]()mutable {return val++; });
+
+	//iota
+	std::vector<int> ivec7(10);
+	std::iota(ivec7.begin(), ivec7.end(), 1);
+	PRINT_ELEMENTS(ivec7, "iota: ");
+
+	//replace_copy_if
+	std::vector<int> ivec8{ 1,2,3,4,5,6,7,8,9,10,11 };
+	std::replace_copy_if(ivec8.cbegin(), ivec8.cend(), std::ostream_iterator<int>(cout, ","), [](const int& val) {return val % 2 == 0; }, 0);
+
+	cout << endl;
+	//unique_copy
+	std::string str = "Hello, here are sometimes   more and     sometimes fewer spaces.";
+	std::copy(str.cbegin(), str.cend(), std::ostream_iterator<char>(cout));
+	cout << endl;
+	std::unique_copy(str.cbegin(), str.cend(), std::ostream_iterator<char>(cout), BothSpace());
+
+	//partition
+	std::vector<int> ivec9(10), ivec10(10);
+	std::iota(ivec9.begin(), ivec9.end(), 1);
+	std::iota(ivec10.begin(), ivec10.end(), 1);
+	std::partition(ivec9.begin(), ivec9.end(), [](const int& val) { return val % 3 == 0; });
+	std::stable_partition(ivec10.begin(), ivec10.end(), [](const int& val) {return val % 3 == 0; });
+	PRINT_ELEMENTS(ivec9, "partition: ");
+	PRINT_ELEMENTS(ivec10, "stable_partition: ");
+
+	//partition colllection to to ranges
+	std::vector<int> ivec11(10),dest1, dest2;
+
+	std::iota(ivec11.begin(), ivec11.end(), 1);
+	std::partition_copy(ivec11.cbegin(), ivec11.cend(), std::back_inserter(dest1), std::back_inserter(dest2), [](const int& val) {return val % 2 == 0; });
+	PRINT_ELEMENTS(dest1, "Even: ");
+	PRINT_ELEMENTS(dest2, "Odd: ");
+
+	//nth_elements
+	std::vector<int> ivec12{ 1,5,3,2,10,3,4,7,5,6,7,3,8,9 };
+	std::nth_element(ivec12.begin(), std::find(ivec12.begin(), ivec12.end(), 4), ivec12.end());
+	PRINT_ELEMENTS(ivec12, "nth_elements");
 }
