@@ -56,7 +56,11 @@
     <ClInclude Include="src\ch\Functor.h">
       <Filter>头文件</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="src\ch\Algorithm.h">
+=======
+    <ClInclude Include="src\ch\Algorithm_1.h">
+>>>>>>> ccab9cf7a6a73a7c83faf692de7bd62e6ef43aa1
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
