@@ -194,4 +194,12 @@ int main()
 	std::vector<int> vec20{ 3,4,5,6,7,8 };
 	bool ret = std::equal(vec19.cbegin(), vec19.cend(), vec20.cbegin(), [](int val1, int val2) { return val1 % 2 == val2 % 2; });
 	cout << "vec19 an vec20 is " << (ret ? "equal" : "not equal") << endl;
+
+	//move
+	std::vector<int> vec21{ 1,2,3 };
+	std::vector<int> vec22;
+
+	std::move(vec21.begin(), vec21.end(), std::back_inserter(vec22));
+	PRINT_ELEMENTS(vec22, "vec22: ");
+	PRINT_ELEMENTS(vec21, "vec21: ");
 }

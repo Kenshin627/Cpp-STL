@@ -40,4 +40,18 @@ int main()
 	else {
 		cout << "not mismatch" << endl;
 	}
+
+	//transform
+	std::vector<int> ivec3{ 1,2,3 };
+	std::vector<int> ivec4;
+	std::vector<int> ivec5;
+	std::transform(ivec3.cbegin(), ivec3.cend(), std::back_inserter(ivec4), [](int val) { return val + 10; });
+	std::transform(ivec3.cbegin(), ivec3.cend(), std::back_inserter(ivec5), std::bind(std::multiplies<int>(), std::placeholders::_1, 10));
+	PRINT_ELEMENTS(ivec4, "map to ivec4: ");
+	PRINT_ELEMENTS(ivec5, "map to ivec5: ");
+
+	//transform combine two coll
+	std::vector<int> ivec6{ 1,2,3,4,5 };
+	std::transform(ivec6.cbegin(), ivec6.cend(), ivec6.cbegin(), ivec6.begin(), std::multiplies<int>());
+	PRINT_ELEMENTS(ivec6, "map to ivec6: ");
 }
