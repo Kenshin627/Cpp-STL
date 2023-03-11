@@ -18,5 +18,7 @@
     <ClInclude Include="src\ch\unordered_map.h" />
     <ClInclude Include="src\ch\vector.h" />
     <ClInclude Include="src\ch\Algorithm.h" />
+    <ClInclude Include="src\templates\tuple.h" />
+    <ClInclude Include="src\ch\variadicTemplate.h" />
   </ItemGroup>
 </Project>
